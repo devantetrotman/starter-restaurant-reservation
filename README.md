@@ -1,4 +1,4 @@
-# Capstone: Restaurant Reservation System
+        # Capstone: Restaurant Reservation System
 
 > You have been hired as a full stack developer at _Periodic Tables_, a startup that is creating a reservation system for fine dining restaurants.
 > The software is used only by restaurant personnel when a customer calls to request a reservation.
@@ -390,7 +390,7 @@ so that reservations are accurate and current.
    - The Cancel button must have a `data-reservation-id-cancel={reservation.reservation_id}` attribute, so it can be found by the tests.
    - Clicking the "Cancel" button will display the following confirmation: "Do you want to cancel this reservation? This cannot be undone."
      - Clicking "Ok" on the confirmation dialog, sets the reservation status to `cancelled`, and the results on the page are refreshed.
-       - set the status of the reservation to `cancelled` using a PUT to `/reservations/:reservation_id/status` with a body of `{data: { status: "cancelled" } }`.
+       - set the status of the reservation to `cancelled` using a PUT to `/reservations/:reservation_id/status` with a body of `{data: { status: "cancelled" } }`.gf2cf
      - Clicking "Cancel" on the confirmation dialog makes no changes.
 1. The `/reservations/:reservation_id/edit` page will display the reservation form with the existing reservation data filled in
    - Only reservations with a status of "booked" can be edited.

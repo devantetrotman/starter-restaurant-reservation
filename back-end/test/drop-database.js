@@ -3,6 +3,7 @@ const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
 
 const knex = require("../src/db/connection");
+console.log(knex);
 
 knex.migrate
   .forceFreeMigrationsLock()

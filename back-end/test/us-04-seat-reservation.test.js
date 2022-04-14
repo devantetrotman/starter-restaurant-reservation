@@ -263,7 +263,6 @@ describe("US-04 - Seat reservation", () => {
 
         expect(occupyResponse.body.error).toBeUndefined();
         expect(occupyResponse.status).toBe(200);
-
         // next, try to assign the table to another reservation
         const doubleAssignResponse = await request(app)
           .put(`/tables/${tableOne.table_id}/seat`)
