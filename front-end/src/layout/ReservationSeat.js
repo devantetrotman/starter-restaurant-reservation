@@ -30,16 +30,18 @@ function ReservationSeat({tables, loadTables}){
     return(
         <form onSubmit={handleSubmit}>
                 <h3>Seat Reservation</h3>
-                <div class="m-3">
-                    <label className="row">Choose Table ID:</label>
-                    <select className="row col-4" id="table_id" name="table_id" onChange={(e) => setTable_id(e.target.value)}>
+                <div className="form-line">
+                    <label className="form-label">Choose Table ID:</label>
+                    <select className="form-input" id="table_id" name="table_id" onChange={(e) => setTable_id(e.target.value)}>
                         {tables.map((table) => (
                             <option key={table.table_id} value={table.table_id}>{table.table_name} - {table.capacity}</option>
                         ))}
                     </select>
                 </div>
-                <button className="btn btn-danger mx-2 text-center" onClick={() => history.goBack()}>Cancel</button>
-                <button className="btn btn-success mx-2 text-center" type="submit">Submit</button>
+                <div className="form-buttons">
+                    <button className="cancel-btn" onClick={() => history.goBack()}>Cancel</button>
+                    <button className="submit-btn" type="submit">Submit</button>
+                </div>
         </form>
     );
 }

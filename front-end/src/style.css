@@ -1,0 +1,161 @@
+.dashboard{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: black;
+}
+
+.nav-btns{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: lightblue;
+    margin: 3px;
+    width: 80px;
+    border-radius: 5px;
+}
+
+a{
+    color:black;
+}
+
+.reservation{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin: 5px;
+    border-style: solid;
+}
+
+.reservation-date{
+    font-size: 20px;
+}
+
+.tables{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.table-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.table-entry{
+    padding-right: 15px;
+}
+
+.table-name{
+    font-weight: bold;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+}
+
+.form-line{
+    display: flex;
+    flex-direction: column;
+}
+.form-buttons{
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    justify-content: center;
+    text-align: center;
+}
+
+.form-label{
+    width: 300px;
+}
+
+.form-input{
+    width: 300px;
+} 
+
+.cancel-btn{
+    background-color: red;
+    margin-right: 10px;
+    width: 70px;
+    border-radius: 5px;
+}
+
+.submit-btn{
+    background-color: green;
+    margin-right: 10px;
+    width: 70px;
+    border-radius: 5px;
+}
+
+.edit-btn{
+    display: block;
+    text-align: center;
+    border-radius: 5px;
+    line-height: 25px;
+    background-color: blue;
+    margin-right: 10px;
+    width: 70px;
+
+}
+
+.finish-btn{
+    background-color: yellow;
+    border-radius: 2px;
+    width: 70px;
+    height: 30px;
+    margin: 10px; 
+    border-radius: 5px;
+}
+
+.find-btn{
+    background-color: green;
+    margin: 10px;
+    width: 70px;
+    border-radius: 5px;
+}
+
+.no-reservations{
+    justify-content: center;
+    margin: 100px;
+    font-size: 30px;
+    border-style: dotted;
+}
+
+
+
+@media only screen and (min-width: 600px){
+
+    .form{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-line{
+        display: flex;
+        flex-direction: column;
+    }
+    .form-buttons{
+        display: flex;
+        flex-direction: row;
+        margin: 10px;
+        justify-content: left;
+    }
+
+    .form-label{
+        width: 600px;
+    }
+
+    .form-input{
+        width: 600px;
+    } 
+
+    .no-reservations{
+        justify-content: center;
+        margin: 100px;
+        font-size: 80px;
+        border-style: dotted;
+    }
+
+}

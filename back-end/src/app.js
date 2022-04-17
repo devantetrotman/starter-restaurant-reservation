@@ -11,9 +11,11 @@ const reservationsRouter = require("./reservations/reservations.router");
 const tablesRouter = require("./tables/tables.router");
 
 const app = express();
+app.use(express.static("public"));
 
 app.use(cors());
 app.use(express.json());
+
 
 
 app.use("/reservations", reservationsRouter);

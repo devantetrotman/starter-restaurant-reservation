@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {useHistory} from "react-router-dom";
+import "../style.css";
 
 function NewTable({loadTables}){
     const [tableName, setTableName] = useState("");
@@ -30,17 +31,17 @@ function NewTable({loadTables}){
     return(
         <form className="pl-3" onSubmit={handleSubmit}>
           <h3>New Table: </h3>
-          <div class="mb-3">
-                <label className="row">Table Name</label>
-                <input className="row col-8" type="text" value={tableName} onChange={(e) => setTableName(e.target.value)} name="table_name" placeholder="Table Name"/>
+          <div className="form-line">
+                <label className="form-label">Table Name:</label>
+                <input className="form-input" type="text" value={tableName} onChange={(e) => setTableName(e.target.value)} name="table_name" placeholder="Table Name"/>
           </div>
-          <div class="mb-3">
-                <label className="row">Capacity</label>
-                <input className="row col-8" type="number" value={capacity} onChange={(e) => setCapacity(e.target.value)} name="capacity" min="1" />
+          <div className="form-line">
+                <label className="form-label">Capacity:</label>
+                <input className="form-input" type="number" value={capacity} onChange={(e) => setCapacity(e.target.value)} name="capacity" min="1" />
           </div>
-          <div className="row pl-3">
-                <button className="btn btn-danger mx-2 text-center" onClick={() => history.goBack()}>Cancel</button>
-                <button className="btn btn-success mx-2 text-center" type="submit">Submit</button>
+          <div className="form-buttons">
+                <button className="cancel-btn" onClick={() => history.goBack()}>Cancel</button>
+                <button className="submit-btn" type="submit">Submit</button>
           </div>
         </form>
     );

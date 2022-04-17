@@ -3,6 +3,7 @@ import useState from 'react-usestateref';
 import { listReservations } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import { useHistory, useLocation } from "react-router";
+import "../style.css";
 
 /**
  * Defines the dashboard page.
@@ -11,10 +12,10 @@ import { useHistory, useLocation } from "react-router";
  * @returns {JSX.Element}
  */
 function Dashboard({ date, tables, todaysDate, loadTables }) {
-  const [reservations, setReservations, reservationsRef] = useState([]);
+  const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
-  const [reservationDates, setReservationDates, reservationDatesRef] = useState([]);
-  const [todayPoint, setTodayPoint, todayPointRef] = useState(0);
+  const [reservationDates, setReservationDates] = useState([]);
+  const [todayPoint, setTodayPoint] = useState(0);
   const [point, setPoint, pointRef] = useState(0);
   const history = useHistory();
 
@@ -26,12 +27,6 @@ function Dashboard({ date, tables, todaysDate, loadTables }) {
   let todayPointer;
   let reservedDates = [];
   let sortedDates = [];
-
-  // let today = new Date();
-  // let year = today.getFullYear();
-  // let month = today.getMonth() + 1;
-  // let day = today.getDate();
-  // let todaysDate = `${year}-${month}-${day}`;
 
   useEffect(() => {
     loadDashboard();
@@ -143,59 +138,63 @@ function Dashboard({ date, tables, todaysDate, loadTables }) {
   
 
   return (
-    <main class="border border-dark py-2">
+    <main className="dashboard">
       <h1 className="pl-3">Dashboard</h1>
       <div className="d-md-flex mb-3">
-        <h4 className="pl-3 mb-0">{`Reservations for date ${point === undefined ? "" : reservationDates[pointRef.current]}`}</h4>
+        <h4 className="reservation-date">{`Reservations for date ${point === undefined ? "" : reservationDates[pointRef.current]}`}</h4>
       </div>
       <ErrorAlert error={reservationsError} />
       {/* {JSON.stringify(reservations)} */}
       {reservations.map((reservation) =>(
-        <div className="m-3" key={reservation.reservation_id}>
-          <div className="row m-3">
-          <p className="col-2 mx-2">{`First Name: ${reservation.first_name}`}</p>
-          <p className="col-2 mx-2">{`Last Name: ${reservation.last_name}`}</p>
-          <p className="col-2 mx-2">{`Mobile Number: ${reservation.mobile_number}`}</p>
-          <p className="col-2 mx-2">{`Reservation Date: ${reservation.reservation_date}`}</p>
-          <p className="col-2 mx-2">{`Reservation Time: ${reservation.reservation_time}`}</p>
-          <p className="col-2 mx-2">{`Party Size: ${reservation.people}`}</p>
+        <div className="reservation" key={reservation.reservation_id}>
+          <div className="reservation-entry">
+            <p className="reservation-info">{`First Name: ${reservation.first_name}`}</p>
+            <p className="reservation-info">{`Last Name: ${reservation.last_name}`}</p>
+            <p className="reservation-info">{`Mobile Number: ${reservation.mobile_number}`}</p>
+            <p className="reservation-info">{`Reservation Date: ${reservation.reservation_date}`}</p>
+            <p className="reservation-info">{`Reservation Time: ${reservation.reservation_time}`}</p>
+            <p className="reservation-info">{`Party Size: ${reservation.people}`}</p>
           </div>
-            <a className="btn btn-danger m-2" 
+          <div className="form-buttons">
+            <a className="cancel-btn" 
             onClick={() => handleCancel(reservation.reservation_id)}
           data-reservation-id-cancel={reservation.reservation_id}
           href={`/reservations/${reservation.reservation_id}/seat`}>Cancel</a>
           {reservation.status === "booked" &&
-            <a className="btn btn-success m-2"
+            <a className="submit-btn"
           data-reservation-id-status={reservation.reservation_id}
           href={`/reservations/${reservation.reservation_id}/seat`}>Seat</a>
           }
-          <a className="btn btn-primary m-2"href={`/reservations/${reservation.reservation_id}/edit`}>Edit</a> 
+          <a className="edit-btn"href={`/reservations/${reservation.reservation_id}/edit`}>Edit</a> 
+          </div>
         </div>
       ))}
       <div className="text-center">
-        <button className="btn btn-info mx-1" onClick={() => previousClick()}
+        <button className="nav-btns" onClick={() => previousClick()}
         disabled={pointRef.current === 0}>Previous</button>
-        <button className="btn btn-info mx-1" onClick={() => todayClick()}>Today</button>
-        <button className="btn btn-info mx-1" onClick={() => nextClick()}
+        <button className="nav-btns" onClick={() => todayClick()}>Today</button>
+        <button className="nav-btns" onClick={() => nextClick()}
         disabled={pointRef.current === reservationDates.length - 1}>Next</button>
       </div>
-      <h3 className="pl-3 py-2 my-4 border-top border-dark">Tables:</h3>
+      <h3 className="tables-heading">Tables:</h3>
       {
       tables.map((table) =>(
-        <div className="row text-center py-3 pl-5" key={table.table_id}>
-          <p className="col-3 mx-2">{`Table Name: ${table.table_name}`}</p>
-          <p className="col-3 mx-2">{`Capacity: ${table.capacity}`}</p>
-          <p
-          data-table-id-status={table.table_id}
-          className="col-3 mx-2"
-          >{`Status: ${table.status}`}</p>
+        <div className="tables" key={table.table_id}>
+            <p className="table-name">{`Table Name: ${table.table_name}`}</p>
+            <div className="table-info">
+            <p className="table-entry">{`Capacity: ${table.capacity}`}</p>
+            <p
+            data-table-id-status={table.table_id}
+            className="table-entry"
+            >{`Status: ${table.status}`}</p>
           { table.status === "occupied" &&
             <button
-            className="btn btn-warning mx-3 h-25"
+            className="finish-btn"
             onClick={() => handleClick(table.table_id)}
             data-table-id-finish={table.table_id}
             >Finish</button>
           }
+          </div>
         </div>
       ))}
       
