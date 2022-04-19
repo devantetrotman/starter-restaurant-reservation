@@ -14,7 +14,7 @@ This application allows the user to:
 - Search for a reservation using the mobile number associated with the reservation
 - Seat reservation when the customer arrives
 
-
+[Deployed App](https://resraunt-reserve.herokuapp.com/dashboard)
 
 ## Installation Instructions
 Fork and clone this repository.
