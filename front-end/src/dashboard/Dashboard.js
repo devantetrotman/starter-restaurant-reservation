@@ -11,7 +11,7 @@ import "../style.css";
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
  */
-function Dashboard({ date, tables, todaysDate, loadTables }) {
+function Dashboard({ date, tables, todaysDate, loadTables, errorMessage }) {
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
   const [reservationDates, setReservationDates] = useState([]);
@@ -106,7 +106,7 @@ function Dashboard({ date, tables, todaysDate, loadTables }) {
   }
 
   async function handleClick(tableId){
-    if (window.confirm("Is this table ready to seat new guests? This cannot be undone.")){
+    if (window.confirm("Is this table ready to seat new guests?")){
       fetch(`http://localhost:5000/tables/${tableId}/seat/`, {
         method: "DELETE",
         headers: { 'Content-Type': 'application/json' },
@@ -126,7 +126,7 @@ function Dashboard({ date, tables, todaysDate, loadTables }) {
       } 
     })
   };
-    if (window.confirm("Do you want to cancel this reservation? This cannot be undone.")){
+    if (window.confirm("Do you want to cancel this reservation?")){
       fetch(`http://localhost:5000/reservations/${reservation_id}/status`, requestOptions)
         .then(response => response.json())
         .then(data => console.log(data));

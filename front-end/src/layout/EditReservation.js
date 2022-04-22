@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import {useHistory, useParams} from "react-router-dom";
 import "../style.css";
 
-function NewReservation(){
+function EditReservation({errorMessage, setErrorMessage, stateDate, stateTime}){
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [mobileNumber, setMobileNumber] = useState("");
-    const [reservationDate, setReservationDate] = useState();
-    const [reservationTime, setReservationTime] = useState();
+    const [reservationDate, setReservationDate] = useState(stateDate);
+    const [reservationTime, setReservationTime] = useState(stateTime);
     const [people, setPeople] = useState(1);
 
     const { reservation_id } = useParams();
@@ -25,7 +25,6 @@ function NewReservation(){
             setReservationDate(resDate);
             setReservationTime(theReservationsData.reservation_time);
             setPeople(theReservationsData.people);
-            console.log(theReservationsData);
         }
         loadReservation();
     },[reservation_id])
@@ -48,11 +47,13 @@ function NewReservation(){
     };
     fetch(`http://localhost:5000/reservations/${reservation_id}`, requestOptions)
         .then(response => response.json())
-        .then(data => console.log(data));
+        .then(data => setErrorMessage(data.error));
         history.push("/dashboard");
     }
 
     return(
+      <div>
+      {errorMessage && <p>{errorMessage}</p>}
       <form className="form" onSubmit={handleSubmit}>
             <h3>New Reservation:</h3>
             <div className="form-line">
@@ -84,7 +85,8 @@ function NewReservation(){
                   <button className="submit-btn" type="submit">Submit</button>
             </div>
     </form>
+    </div>
     );
 }
 
-export default NewReservation;
+export default EditReservation;

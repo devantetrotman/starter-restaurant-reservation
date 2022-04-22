@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import {useHistory, useParams} from "react-router-dom";
 
-function ReservationSeat({tables, loadTables}){
+function ReservationSeat({tables, loadTables, errorMessage, setErrorMessage}){
     const [table_id, setTable_id] = useState(1);
-    console.log(table_id);
 
     const {reservation_id} = useParams();
     const history = useHistory();
@@ -22,7 +21,7 @@ function ReservationSeat({tables, loadTables}){
     
     fetch(`http://localhost:5000/tables/${table_id}/seat/`, requestOptions)
         .then(response => response.json())
-        .then(data => console.log(data));
+        .then(data => setErrorMessage(data.error));
         await loadTables();
         history.push("/dashboard");
     }

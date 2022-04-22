@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, {useEffect} from "react";
+import useState from 'react-usestateref';
 import {useHistory} from "react-router-dom";
 import "../style.css";
 // const reservations = require("../../back-end/src/db/seeds/00-reservations.json");
@@ -7,12 +8,17 @@ function NewReservation(){
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [mobileNumber, setMobileNumber] = useState("");
-    const [reservationDate, setReservationDate] = useState();
-    const [reservationTime, setReservationTime] = useState();
+    const [reservationDate, setReservationDate] = useState(null);
+    const [reservationTime, setReservationTime] = useState(null);
     const [people, setPeople] = useState(1);
+    const [errorMessage, setErrorMessage, errorMessageRef] = useState("");
+    const [isError, setIsError] = useState(false);
 
-    console.log(typeof people);
     const history = useHistory();
+
+//     useEffect(() => {
+
+//     }, []);
 
     async function handleSubmit(e){
       e.preventDefault();
@@ -30,13 +36,23 @@ function NewReservation(){
         } 
       })
     };
-    fetch('http://localhost:5000/reservations', requestOptions)
+    
+      fetch('http://localhost:5000/reservations', requestOptions)
         .then(response => response.json())
-        .then(data => console.log(data));
-        history.push("/dashboard");
+        .then(data => setErrorMessage(data.error));
+            // console.log(errorMessage);
+            // console.log(isError);
+        if (errorMessage !== ""){
+              setIsError(true);
+        }
+      //   if (!isError){
+      //         history.push("/dashboard");
+       //8 }
     }
 
     return(
+          <div>
+      {isError && <p className="error">ERROR: {errorMessageRef.current}</p>}
       <form className="form" onSubmit={handleSubmit}>
       <h3>New Reservation:</h3>
       <div className="form-line">
@@ -61,13 +77,14 @@ function NewReservation(){
       </div>
       <div className="form-line">
             <label className="form-label">People:</label>
-            <input className="form-input" type="number" value={people} onChange={(e) => setPeople(e.target.value)} name="people" min="1" placeholder="XXX-XXX-XXXX"/>
+            <input className="form-input" type="number" value={people} onChange={(e) => setPeople(e.target.value)} name="people" min="1"/>
       </div>
       <div className="form-buttons">
             <button className="cancel-btn" onClick={() => history.goBack()}>Cancel</button>
             <button className="submit-btn" type="submit">Submit</button>
       </div>
     </form>
+    </div>
     );
 }
 

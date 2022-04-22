@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function Search({loadTables}){
+function Search({loadTables, errorMessage}){
     const [mobileNumber, setMobileNumber] = useState("Enter a customer's phone number");
     const [matchedReservations, setMatchedReservations] = useState([]);
 

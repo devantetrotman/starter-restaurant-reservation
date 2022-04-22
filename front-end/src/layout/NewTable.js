@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {useHistory} from "react-router-dom";
 import "../style.css";
 
-function NewTable({loadTables}){
+function NewTable({loadTables, errorMessage, setErrorMessage}){
     const [tableName, setTableName] = useState("");
     const [capacity, setCapacity] = useState(1);
 
@@ -22,13 +22,15 @@ function NewTable({loadTables}){
     };
     fetch('http://localhost:5000/tables', requestOptions)
         .then(response => response.json())
-        .then(data => console.log(data));
+        .then(data => setErrorMessage(data.error));
         await loadTables();
         history.push("/dashboard");
     }
 
 
     return(
+      <div>
+      {errorMessage && <p>{errorMessage}</p>}
         <form className="pl-3" onSubmit={handleSubmit}>
           <h3>New Table: </h3>
           <div className="form-line">
@@ -44,6 +46,7 @@ function NewTable({loadTables}){
                 <button className="submit-btn" type="submit">Submit</button>
           </div>
         </form>
+        </div>
     );
 }
 
