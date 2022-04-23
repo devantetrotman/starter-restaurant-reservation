@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
+import useState from 'react-usestateref';
 import {useHistory} from "react-router-dom";
 import "../style.css";
+import ErrorAlert from "./ErrorAlert";
 
-function NewTable({loadTables, errorMessage, setErrorMessage}){
+
+function NewTable({loadTables}){
     const [tableName, setTableName] = useState("");
     const [capacity, setCapacity] = useState(1);
+    const [errorMessage, setErrorMessage, errorMessageRef] = useState({});
+    const [isError, setIsError, isErrorRef] = useState(false);
 
     const history = useHistory();
 
     async function handleSubmit(e){
       e.preventDefault();
+      setIsError(false);
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -17,20 +23,28 @@ function NewTable({loadTables, errorMessage, setErrorMessage}){
           data:{
             table_name: tableName,
             capacity: Number(capacity)
-        } 
-      })
-    };
-    fetch('http://localhost:5000/tables', requestOptions)
-        .then(response => response.json())
-        .then(data => setErrorMessage(data.error));
-        await loadTables();
-        history.push("/dashboard");
+          } 
+        })
+      };
+      try{
+        const response = await fetch('http://localhost:5000/tables', requestOptions);
+        const data = await response.json();
+        if (response.status !== 200 && response.status !== 201){
+            throw data.error;
+        }
+      }catch(error){
+            setIsError(true);
+            setErrorMessage({message: error});
+      }
+      if (!isErrorRef.current){
+            await loadTables();
+            history.push("/dashboard");
+      }
     }
-
 
     return(
       <div>
-      {errorMessage && <p>{errorMessage}</p>}
+      {isErrorRef.current && <ErrorAlert error={errorMessageRef.current}/>}
         <form className="pl-3" onSubmit={handleSubmit}>
           <h3>New Table: </h3>
           <div className="form-line">
@@ -46,7 +60,7 @@ function NewTable({loadTables, errorMessage, setErrorMessage}){
                 <button className="submit-btn" type="submit">Submit</button>
           </div>
         </form>
-        </div>
+    </div>
     );
 }
 

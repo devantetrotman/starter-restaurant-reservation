@@ -1,7 +1,9 @@
 import React, {useEffect} from "react";
-import useState from 'react-usestateref'
+import useState from 'react-usestateref';
 import {useHistory, useParams, useLocation} from "react-router-dom";
 import ErrorAlert from "./ErrorAlert";
+import "../style.css";
+
 
     function ReservationForm({stateDate, stateTime, loadTables, tables}){
         const [firstName, setFirstName] = useState("");
@@ -99,14 +101,14 @@ import ErrorAlert from "./ErrorAlert";
           try{
             const response = await fetch('http://localhost:5000/reservations', requestOptions);
             const data = await response.json();
-            if (response.status !== 200){
+            if (response.status !== 200 && response.status !== 201){
                 throw data.error;
             }
           }catch(error){
               setErrorMessage({message: error});
               setIsError(true);
           }
-          if (!isError){
+          if (!isErrorRef.current){
               history.push(`/dashboard?date=${reservationDate}`);
           }
         }

@@ -96,20 +96,20 @@ function formatTime(date) {
         <Redirect to={"/dashboard"} />
       </Route>
       <Route path="/dashboard">
-        <Dashboard date={today()} tables={tables} todaysDate={today()} loadTables={loadTables} errorMessage={errorMessage} setErrorMessage={setErrorMessage}/>
+        <Dashboard date={today()} tables={tables} todaysDate={today()} loadTables={loadTables} />
       </Route>
       <Route path="/reservations/new">
         
-        <ReservationForm stateDate={stateDate} stateTime={stateTime} tables={tables} loadTables={loadTables} errorMessage={errorMessage} setErrorMessage={setErrorMessage}/>
+        <ReservationForm stateDate={stateDate} stateTime={stateTime} tables={tables} loadTables={loadTables} />
       </Route>
       <Route path="/reservations/:reservation_id/seat">
-        <ReservationSeat tables={tables} loadTables={loadTables} errorMessage={errorMessage} setErrorMessage={setErrorMessage}/>
+        <ReservationSeat tables={tables} loadTables={loadTables} />
       </Route>
       <Route path="/reservations/:reservation_id/edit">
-        <ReservationForm stateDate={stateDate} stateTime={stateTime} tables={tables} loadTables={loadTables} errorMessage={errorMessage} setErrorMessage={setErrorMessage}/>
+        <ReservationForm stateDate={stateDate} stateTime={stateTime} tables={tables} loadTables={loadTables} />
       </Route>
       <Route path="/tables/new">
-        <NewTable loadTables={loadTables} errorMessage={errorMessage} setErrorMessage={setErrorMessage}/>
+        <NewTable loadTables={loadTables} />
       </Route>
       <Route path="/search">
         <Search loadTables={loadTables} errorMessage={errorMessage} setErrorMessage={setErrorMessage}/>
