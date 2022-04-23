@@ -26,8 +26,9 @@ function NewTable({loadTables}){
           } 
         })
       };
+      const abortController = new AbortController();
       try{
-        const response = await fetch('http://localhost:5000/tables', requestOptions);
+        const response = await fetch('http://localhost:5000/tables', requestOptions, { signal: abortController.signal });
         const data = await response.json();
         if (response.status !== 200 && response.status !== 201){
             throw data.error;
@@ -40,6 +41,9 @@ function NewTable({loadTables}){
             await loadTables();
             history.push("/dashboard");
       }
+      return () => {
+        abortController.abort(); // Cancels any pending request or response
+      };
     }
 
     return(

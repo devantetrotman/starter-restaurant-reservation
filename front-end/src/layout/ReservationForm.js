@@ -66,8 +66,9 @@ import "../style.css";
                 } 
             })
           };
+          const abortController = new AbortController();
           try{
-            const response = await fetch(`http://localhost:5000/reservations/${reservation_id}`, requestOptions);
+            const response = await fetch(`http://localhost:5000/reservations/${reservation_id}`, requestOptions, { signal: abortController.signal });
             const data = await response.json();
             if (response.status !== 200){
                 throw data.error;
@@ -79,6 +80,9 @@ import "../style.css";
           if (!isError){
               history.push("/dashboard");
           }
+          return () => {
+            abortController.abort(); // Cancels any pending request or response
+          };
         }
 
         async function handleCreateSubmit(e){

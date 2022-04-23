@@ -25,8 +25,9 @@ function ReservationSeat({tables, loadTables}){
         } 
       })
     };
+    const abortController = new AbortController();
     try{
-        const response = await fetch(`http://localhost:5000/tables/${table_id}/seat/`, requestOptions);
+        const response = await fetch(`http://localhost:5000/tables/${table_id}/seat/`, requestOptions, { signal: abortController.signal });
         const data = await response.json();
             if (response.status !== 200){
                 throw data.error;
@@ -39,6 +40,9 @@ function ReservationSeat({tables, loadTables}){
             await loadTables();
             history.push("/dashboard");
           }
+          return () => {
+            abortController.abort(); // Cancels any pending request or response
+          };
     }
 
     return(
